@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <!-- Vue pour le tableau de bord -->
+        <record id="view_hotel_dashboard_form" model="ir.ui.view">
+            <field name="name">hotel.dashboard.form</field>
+            <field name="model">hotel.dashboard</field>
+            <field name="arch" type="xml">
+                <form string="Hotel Dashboard">
+                    <group>
+                        <field name="date"/>
+                    </group>
+                    <notebook>
+                        <page string="Single Rooms">
+                            <field name="single_rooms" widget="html"/>
+                        </page>
+                        <page string="Double Rooms">
+                            <field name="double_rooms" widget="html"/>
+                        </page>
+                        <page string="Suite Rooms">
+                            <field name="suite_rooms" widget="html"/>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action pour le tableau de bord -->
+        <record id="dashboard_action" model="ir.actions.act_window">
+            <field name="name">Hotel Dashboard</field>
+            <field name="res_model">hotel.dashboard</field>
+            <field name="view_mode">form</field>
+        </record>
+
+        <!-- Menu pour le tableau de bord -->
+        <menuitem id="menu_hotel" name="Hotel Management" sequence="10"/>
+        <menuitem id="menu_hotel_dashboard" name="Hotel Dashboard" parent="menu_hotel" sequence="10"
+                  action="dashboard_action"/>
+
+    </data>
+</odoo>

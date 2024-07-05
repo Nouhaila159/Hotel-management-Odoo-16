@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="reservation_invoice_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-family: Arial, sans-serif;">
+                        <div class="row" style="margin-bottom: 20px;">
+                            <div class="col-6">
+                                <img t-att-src="'/gestion_hotel/static/description/icon.png'" alt="Logo" style="width: 150px;"/>
+                            </div>
+                        </div>
+                        <h2 style="color: #2E86C1; text-align: center;">Invoice</h2>
+                        <p><strong>Reservation ID:</strong> <t t-esc="o.reservation_code"/></p>
+                        <p><strong>Customer Name:</strong> <t t-esc="o.customer_id.name"/></p>
+                        <p><strong>Check-In Date:</strong> <t t-esc="o.check_in_date"/></p>
+                        <p><strong>Check-Out Date:</strong> <t t-esc="o.check_out_date"/></p>
+                        <p><strong>Room:</strong> <t t-esc="o.room_id.name"/></p>
+                        <p><strong>Adults:</strong> <t t-esc="o.adults"/></p>
+                        <p><strong>Children:</strong> <t t-esc="o.children"/></p>
+                        <h3 style="color: #2E86C1;">Services</h3>
+                        <table class="table table-bordered" style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                            <thead style="background-color: #2E86C1; color: #FFF;">
+                                <tr>
+                                    <th style="padding: 8px; text-align: left;">Service</th>
+                                    <th style="padding: 8px; text-align: left;">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.service_ids" t-as="service">
+                                    <tr>
+                                        <td style="padding: 8px; border: 1px solid #DDD;"><t t-esc="service.name"/></td>
+                                        <td style="padding: 8px; border: 1px solid #DDD;"><t t-esc="service.price"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                        <p style="margin-top: 20px;"><strong>Total Service Cost:</strong> <t t-esc="o.total_service_cost"/></p>
+                        <p><strong>Total Cost:</strong> <t t-esc="o.total_cost"/></p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

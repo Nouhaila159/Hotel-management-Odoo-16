@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Vue Tree -->
+        <record id="view_hotel_room_tree" model="ir.ui.view">
+            <field name="name">hotel.room.tree</field>
+            <field name="model">hotel.room</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="room_type"/>
+                    <field name="capacity"/>
+                    <field name="price"/>
+                    <field name="status"/>
+                    <field name="image" widget="image" options='{"preview_image": "image", "size": [120, 120]}'/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Vue Form -->
+        <record id="view_hotel_room_form" model="ir.ui.view">
+            <field name="name">hotel.room.form</field>
+            <field name="model">hotel.room</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Room Name"/>
+                            </h1>
+                        </div>
+                        <notebook>
+                            <!-- Main Tab -->
+                            <page string="Room Details">
+                                <group>
+                                    <field name="room_type"/>
+                                    <field name="capacity"/>
+                                    <field name="price"/>
+                                    <field name="status"/>
+                                </group>
+                            </page>
+
+                            <!-- Image Tab -->
+                            <page string="Room Image">
+                                <group>
+                                    <field name="image" widget="image" options='{"preview_image": "image", "size": [128, 128]}'/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- Vue Kanban -->
+        <record id="view_hotel_room_kanban" model="ir.ui.view">
+            <field name="name">hotel.room.kanban</field>
+            <field name="model">hotel.room</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="name"/>
+                    <field name="room_type"/>
+                    <field name="capacity"/>
+                    <field name="price"/>
+                    <field name="status"/>
+                    <field name="id"/>
+                    <field name="image"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_record_has_image_fill">
+                                    <div class="o_kanban_image d-none d-md-block"
+                                      t-attf-style="background-image:url('#{kanban_image('hotel.room', 'image', record.id.raw_value, placeholder)}')">
+                                      </div>
+                                <div class="oe_kanban_details d-flex flex-column">
+                                    <strong>
+                                        <field name="name" />
+                                    </strong>
+                                    <ul>
+                                        <li>Type: <field name="room_type"/></li>
+                                        <li>Status: <field name="status"/></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+        <!-- Vue Graphique -->
+        <record id="view_hotel_room_graph" model="ir.ui.view">
+            <field name="name">hotel.room.graph</field>
+            <field name="model">hotel.room</field>
+            <field name="arch" type="xml">
+                <graph string="Rooms Graph">
+                    <field name="room_type" type="col"/>
+                    <field name="price" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <!-- Action pour les Chambres -->
+        <record id="room_action" model="ir.actions.act_window">
+            <field name="name">Rooms</field>
+            <field name="res_model">hotel.room</field>
+            <field name="view_mode">kanban,tree,form,graph</field>
+        </record>
+
+        <!-- Menu pour la Gestion d'Hôtel -->
+        <menuitem id="menu_gestion_rooms" name="Rooms Management" parent="menu_hotel" action="room_action" sequence="20"/>
+    </data>
+</odoo>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Tree View -->
+        <record id="view_hotel_service_tree" model="ir.ui.view">
+            <field name="name">hotel.service.tree</field>
+            <field name="model">hotel.service</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="price"/>
+                    <field name="category"/>
+                    <field name="included_in_reservation"/>
+                    <field name="availability"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_hotel_service_form" model="ir.ui.view">
+            <field name="name">hotel.service.form</field>
+            <field name="model">hotel.service</field>
+            <field name="arch" type="xml">
+                <form string="Service Details">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Service Name"/>
+                            </h1>
+                        </div>
+                        <notebook>
+                            <!-- Main Tab -->
+                            <page string="Service Information">
+                                <group>
+                                    <field name="price"/>
+                                    <field name="category"/>
+                                    <field name="availability"/>
+                                </group>
+                            </page>
+
+                            <!-- Reservation Tab -->
+                            <page string="Reservation Options">
+                                <group>
+                                    <field name="included_in_reservation"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- Kanban View -->
+        <record id="view_hotel_service_kanban" model="ir.ui.view">
+            <field name="name">hotel.service.kanban</field>
+            <field name="model">hotel.service</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="name"/>
+                    <field name="price"/>
+                    <field name="included_in_reservation"/>
+                    <field name="category"/>
+                    <field name="availability"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="o_kanban_card">
+                                <strong><field name="name"/></strong>
+                                <div>Price: <field name="price"/></div>
+                                <div>Category: <field name="category"/></div>
+                                <div>Availability: <field name="availability"/></div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Graph View -->
+        <record id="view_hotel_service_graph" model="ir.ui.view">
+            <field name="name">hotel.service.graph</field>
+            <field name="model">hotel.service</field>
+            <field name="arch" type="xml">
+                <graph string="Service Graph">
+                    <field name="category" type="row"/>
+                    <field name="price" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="service_action" model="ir.actions.act_window">
+            <field name="name">Services</field>
+            <field name="res_model">hotel.service</field>
+            <field name="view_mode">kanban,tree,form,graph</field>
+        </record>
+
+        <!-- Menu Item -->
+        <menuitem id="menu_gestion_service" name="Services Management" parent="menu_hotel" action="service_action" sequence="40"/>
+    </data>
+</odoo>

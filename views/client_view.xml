@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Form View for Customer -->
+        <record id="view_hotel_customer_form" model="ir.ui.view">
+            <field name="name">hotel.customer.form</field>
+            <field name="model">hotel.customer</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name"/>
+                        <field name="phone"/>
+                        <field name="email"/>
+                        <field name="document" widget="download_link" filename="customer_identity.pdf"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- Kanban View for Customers -->
+        <record id="view_hotel_customer_kanban" model="ir.ui.view">
+            <field name="name">hotel.customer.kanban</field>
+            <field name="model">hotel.customer</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="o_kanban_card">
+                                <div class="o_kanban_primary">
+                                    <div class="o_kanban_record">
+                                        <div class="o_kanban_record_name" style="background-color: #ffffcc">
+                                            Customer: <field name="name"/>
+                                        </div>
+                                        <div class="o_kanban_record_details">
+                                            <div>Phone: <field name="phone"/></div>
+                                            <div>Email: <field name="email"/></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Tree View for Customers -->
+        <record id="view_hotel_customer_tree" model="ir.ui.view">
+            <field name="name">hotel.customer.tree</field>
+            <field name="model">hotel.customer</field>
+            <field name="arch" type="xml">
+                <tree string="Hotel Customers">
+                    <field name="name"/>
+                    <field name="phone"/>
+                    <field name="email"/>
+                    <field name="document" widget="download_link"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Action for Customers -->
+        <record id="customer_action" model="ir.actions.act_window">
+            <field name="name">Customers</field>
+            <field name="res_model">hotel.customer</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+
+        <!-- Menu Item for Customers -->
+        <menuitem id="menu_gestion_customers" name="Customers" parent="menu_gestion_reservations" action="customer_action" sequence="20"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Tree View for Hotel Staff -->
+        <record id="view_hotel_staff_tree" model="ir.ui.view">
+            <field name="name">hotel.staff.tree</field>
+            <field name="model">hotel.staff</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="role"/>
+                    <field name="hire_date"/>
+                    <field name="contact_info"/>
+                    <field name="salary"/>
+                    <field name="status"/>
+                    <field name="shift_ids" widget="many2many_tags"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+        <!-- Form View for Hotel Staff -->
+        <record id="view_hotel_staff_form" model="ir.ui.view">
+            <field name="name">hotel.staff.form</field>
+            <field name="model">hotel.staff</field>
+            <field name="arch" type="xml">
+                <form string="Staff Details">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Staff Name"/>
+                            </h1>
+                        </div>
+                        <notebook>
+                            <!-- Main Tab -->
+                            <page string="Personal Information">
+                                <group>
+                                    <field name="role"/>
+                                    <field name="hire_date"/>
+                                    <field name="contact_info"/>
+                                    <field name="salary"/>
+                                </group>
+                            </page>
+
+                            <!-- Shifts Tab -->
+                            <page string="Shifts">
+                                <group>
+                                    <field name="shift_ids" widget="many2many_tags"/>
+                                </group>
+                            </page>
+
+                            <!-- Status Tab -->
+                            <page string="Status">
+                                <group>
+                                    <field name="status"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+
+
+        <!-- Kanban View -->
+        <record id="view_hotel_staff_kanban" model="ir.ui.view">
+            <field name="name">hotel.staff.kanban</field>
+            <field name="model">hotel.staff</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="name"/>
+                    <field name="role"/>
+                    <field name="hire_date"/>
+                    <field name="contact_info"/>
+                    <field name="salary"/>
+                    <field name="status"/>
+                    <field name="shift_ids" widget="many2many_tags"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="o_kanban_card">
+                                <strong><field name="name"/></strong>
+                                <div>Role: <field name="role"/></div>
+                                <div>Hire Date: <field name="hire_date"/></div>
+                                <div>Status: <field name="status"/></div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+        <!-- Graph View -->
+        <record id="view_hotel_staff_graph" model="ir.ui.view">
+            <field name="name">hotel.staff.graph</field>
+            <field name="model">hotel.staff</field>
+            <field name="arch" type="xml">
+                <graph string="Staff Graph">
+                    <field name="role" type="row"/>
+                    <field name="salary" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="staff_action" model="ir.actions.act_window">
+            <field name="name">Staff</field>
+            <field name="res_model">hotel.staff</field>
+            <field name="view_mode">kanban,tree,form,graph</field>
+        </record>
+
+        <!-- Menu Item -->
+        <menuitem id="menu_gestion_staff" name="Staff Management" parent="menu_hotel" action="staff_action" sequence="50"/>
+    </data>
+</odoo>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Tree View -->
+        <record id="view_hotel_shift_tree" model="ir.ui.view">
+            <field name="name">hotel.shift.tree</field>
+            <field name="model">hotel.shift</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="date"/>
+                    <field name="start_time" widget="float_time"/>
+                    <field name="end_time" widget="float_time"/>
+                    <field name="staff_count"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_hotel_shift_form" model="ir.ui.view">
+            <field name="name">hotel.shift.form</field>
+            <field name="model">hotel.shift</field>
+            <field name="arch" type="xml">
+                <form string="Shift Details">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="date" placeholder="Date"/>
+                            </h1>
+                        </div>
+                        <notebook>
+                            <!-- Main Tab -->
+                            <page string="Shift Information">
+                                <group>
+                                    <field name="staff_ids" widget="many2many_tags"/>
+                                    <field name="start_time" widget="float_time"/>
+                                    <field name="end_time" widget="float_time"/>
+                                </group>
+                            </page>
+
+                            <!-- Staff Count Tab -->
+                            <page string="Staff Count">
+                                <group>
+                                    <field name="staff_count" readonly="1"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+
+
+        <!-- Kanban View -->
+        <record id="view_hotel_shift_kanban" model="ir.ui.view">
+            <field name="name">hotel.shift.kanban</field>
+            <field name="model">hotel.shift</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="date"/>
+                    <field name="start_time" widget="float_time"/>
+                    <field name="end_time" widget="float_time"/>
+                    <field name="staff_count"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="o_kanban_card">
+                                <strong><field name="date"/></strong>
+                                <div>Start Time: <field name="start_time" widget="float_time"/></div>
+                                <div>End Time: <field name="end_time" widget="float_time"/></div>
+                                <div>Staff Count: <field name="staff_count"/></div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+        <!-- Graph View -->
+       <record id="view_hotel_shift_graph" model="ir.ui.view">
+            <field name="name">hotel.shift.graph</field>
+            <field name="model">hotel.shift</field>
+            <field name="arch" type="xml">
+                <graph string="Shift Graph">
+                    <field name="date" type="row"/>
+                    <field name="start_time" type="measure"/>
+                    <field name="end_time" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+
+
+        <!-- Action -->
+        <record id="shift_action" model="ir.actions.act_window">
+            <field name="name">Shifts</field>
+            <field name="res_model">hotel.shift</field>
+            <field name="view_mode">kanban,tree,form,graph</field>
+        </record>
+
+        <!-- Menu Item -->
+        <menuitem id="menu_gestion_shift" name="Shifts Management" parent="menu_hotel" action="shift_action" sequence="60"/>
+    </data>
+</odoo>

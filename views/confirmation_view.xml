@@ -1,0 +1,21 @@
+<odoo>
+    <data>
+        <template id="confirmation_thank_you">
+            <t t-call="website.layout">
+                <div class="container">
+                    <h1>Thank You</h1>
+                    <p>Your reservation has been confirmed.</p>
+                </div>
+            </t>
+        </template>
+
+        <template id="confirmation_error">
+            <t t-call="website.layout">
+                <div class="container">
+                    <h1>Error</h1>
+                    <p>There was an error confirming your reservation. Please contact us.</p>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Tree View -->
+        <record id="view_hotel_reservation_tree" model="ir.ui.view">
+            <field name="name">hotel.reservation.tree</field>
+            <field name="model">hotel.reservation</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="reservation_code"/>
+                    <field name="reservation_type"/>
+                    <field name="customer_id"/>
+                    <field name="room_id"/>
+                    <field name="check_in_date"/>
+                    <field name="check_out_date"/>
+                    <field name="adults"/>
+                    <field name="children"/>
+                    <field name="total_cost"/>
+                    <field name="status"/>
+                    <field name="archived" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_hotel_reservation_form" model="ir.ui.view">
+            <field name="name">hotel.reservation.form</field>
+            <field name="model">hotel.reservation</field>
+            <field name="arch" type="xml">
+                <form string="Hotel Reservation">
+                    <sheet>
+                        <h1>
+                            <field name="reservation_code" readonly="1"/>
+                        </h1>
+                        <notebook>
+                            <page string="Reservation Details">
+                                <group>
+                                    <group>
+                                        <field name="reservation_type"/>
+                                        <field name="status"/>
+                                    </group>
+                                    <group>
+                                        <field name="customer_id"/>
+                                        <field name="room_id" options="{'no_create': True}" on_change="1"/>
+                                    </group>
+                                    <group>
+                                        <field name="check_in_date"/>
+                                        <field name="check_out_date"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Cost and Services">
+                                <group>
+                                    <field name="adults"/>
+                                    <field name="children"/>
+                                    <field name="service_ids" widget="many2many_tags"/>
+                                    <field name="total_service_cost" readonly="1"/>
+                                    <field name="total_cost" readonly="1"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="reservation_action" model="ir.actions.act_window">
+            <field name="name">Reservations</field>
+            <field name="res_model">hotel.reservation</field>
+            <field name="view_mode">kanban,tree,form,graph</field>
+            <field name="domain">[('archived', '=', False), ('status', 'in', ['pending', 'confirmed']), ('check_out_date', '>=', context_today())]</field>
+        </record>
+
+        <!-- Graph View -->
+        <record id="view_hotel_reservation_graph" model="ir.ui.view">
+            <field name="name">hotel.reservation.graph</field>
+            <field name="model">hotel.reservation</field>
+            <field name="arch" type="xml">
+                <graph string="Reservation Graph" type="bar">
+                    <field name="check_in_date" type="row"/>
+                    <field name="total_cost" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <!-- Kanban View -->
+        <record id="view_hotel_reservation_kanban" model="ir.ui.view">
+            <field name="name">hotel.reservation.kanban</field>
+            <field name="model">hotel.reservation</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name="check_in_date"/>
+                    <field name="check_out_date"/>
+                    <field name="room_id"/>
+                    <field name="customer_id"/>
+                    <field name="status"/>
+                    <field name="reservation_code"/>
+                    <field name="reservation_type"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="o_kanban_card">
+                                <div class="o_kanban_primary">
+                                    <div class="o_kanban_record">
+                                        <div class="o_kanban_record_name" style="background-color: #E1AFD1">
+                                            Reservation Code: <field name="reservation_code"/>
+                                        </div>
+                                        <div class="o_kanban_record_details">
+                                            <div>Room: <field name="room_id"/></div>
+                                            <div>Reservation Type: <field name="reservation_type"/></div>
+                                            <div>Check-In: <field name="check_in_date"/></div>
+                                            <div>Check-Out: <field name="check_out_date"/></div>
+                                            <div>Customer: <field name="customer_id"/></div>
+                                            <div>Status: <field name="status"/></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Menu Items -->
+        <menuitem id="menu_gestion_reservations" name="Reservations Management" parent="menu_hotel" sequence="30"/>
+        <menuitem id="menu_room" name="Reservations" parent="menu_gestion_reservations" action="reservation_action" sequence="10"/>
+    </data>
+</odoo>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="email_template_hotel_reservation_confirmation" model="mail.template">
+            <field name="name">Hotel Reservation Confirmation</field>
+            <field name="email_from">noreply@cmi.co.ma</field>
+            <field name="subject">Reservation Confirmation Required</field>
+            <field name="model_id" ref="model_hotel_reservation"/>
+            <field name="body_html">
+                <![CDATA[
+                    <p>Hello ${object.customer_id.name},</p>
+                    <p>Please confirm your reservation by clicking the link below:</p>
+                    <p><a href="/confirm_reservation/${object.id}">Confirm Reservation</a></p>
+                    <p>Thank you,</p>
+                    <p>${object.company_id.name}</p>
+                ]]>
+            </field>
+        </record>
+    </data>
+</odoo>
